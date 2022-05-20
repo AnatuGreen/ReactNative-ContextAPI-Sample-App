@@ -2,14 +2,11 @@ import React, { useState, useContext } from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  Image,
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
 } from 'react-native';
 import { Fetch } from 'react-request';
-import { Ionicons, EvilIcons, Feather, MaterialCommunityIcons, MaterialIcons, FontAwesome5, SimpleLineIcons } from '@expo/vector-icons'
 import { FavoritesContext } from '../contexts/FavoritesContext';
 import RenderItem from '../components/RenderItem';
 
@@ -17,25 +14,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function List() {
   const navigation = useNavigation();
-  const { favoriteList, setFavoriteList } = useContext(FavoritesContext)
-
-  const onFavorite = restaurant => {
-    setFavoriteList([...favoriteList, restaurant]);
-  };
-
-  const onRemoveFavorite = restaurant => {
-    const filteredList = favoriteList.filter(
-      item => item.id !== restaurant.id
-    );
-    setFavoriteList(filteredList);
-  };
-
-  const ifExists = restaurant => {
-    if (favoriteList.filter(item => item.id === restaurant.id).length > 0) {
-      return true;
-    }
-    return false;
-  };
+  const { favoriteList } = useContext(FavoritesContext)
 
   const renderHeader = () => {
     return (

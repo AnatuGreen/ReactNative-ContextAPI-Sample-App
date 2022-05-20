@@ -1,15 +1,12 @@
 import React, { useState, useContext } from 'react';
 import {
-  ActivityIndicator,
-  FlatList,
   Image,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
 } from 'react-native';
-import { Fetch } from 'react-request';
-import { Ionicons, EvilIcons, Feather, MaterialCommunityIcons, MaterialIcons, FontAwesome5, SimpleLineIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 import { FavoritesContext } from '../contexts/FavoritesContext';
 
 export default function RenderItem({item}) {
