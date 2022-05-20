@@ -103,8 +103,4 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10
   },
-  header: {
-    alignItems: 'center',
-    marginTop: 50,
-  }
 });
