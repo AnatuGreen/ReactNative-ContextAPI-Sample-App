@@ -11,12 +11,8 @@ import {
 import { Fetch } from 'react-request';
 import { Ionicons, EvilIcons, Feather, MaterialCommunityIcons, MaterialIcons, FontAwesome5, SimpleLineIcons } from '@expo/vector-icons'
 import { FavoritesContext } from '../contexts/FavoritesContext';
-import RenderItem from '../components/RenderItem';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
-
-export default function List() {
-  const navigation = useNavigation();
+export default function RenderItem({item}) {
   const { favoriteList, setFavoriteList } = useContext(FavoritesContext)
 
   const onFavorite = restaurant => {
@@ -37,56 +33,48 @@ export default function List() {
     return false;
   };
 
-  const renderHeader = () => {
-    return (
-      <TouchableOpacity
-        style={styles.header}
-        onPress={() =>
-          navigation.navigate('Favorites', {favoriteList})
-        }
-      >
-        <Text style={styles.text}>Go to favorites</Text>
-      </TouchableOpacity>
-    );
-  };
-
   return (
-    <Fetch
-      method='GET'
-      url={`https://example-data.draftbit.com/restaurants?_limit=10`}
-      headers={{
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }}
-    >
-      {({ loading, error, data }) => {
-        if (loading) {
-          return <ActivityIndicator />;
-        }
-
-        if (error) {
-          return null;
-        }
-
-        if (!data) {
-          return null;
-        }
-
-        return (
-          <FlatList
-            data={data}
-            ListHeaderComponent={renderHeader}
-            renderItem={({ item }) => {
-              return (
-                <RenderItem item={item} />
-              );
-            }}
+    <View style={styles.listContainer}>
+      <View>
+        <Image
+          source={{ uri: item['image'] }}
+          style={styles.image}
+          resizeMode='cover'
+        />
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() =>
+            ifExists(item)
+              ? onRemoveFavorite(item)
+              : onFavorite(item)
+          }
+        >
+          <MaterialIcons
+            name={ifExists(item) ? 'favorite' : 'favorite-outline'}
+            size={32}
+            color={'red'}
           />
-        );
-      }}
-    </Fetch>
-  );
-};
+        </TouchableOpacity>
+      </View>
+      <View style={styles.listContainer}>
+        <View style={styles.row}>
+          <Text
+            style={styles.text}
+            allowFontScaling={true}
+            numberOfLines={1}
+          >
+            {item && item['name']}
+          </Text>
+          <MaterialIcons
+            name='brunch-dining'
+            size={24}
+            color={'#444'}
+          />
+        </View>
+      </View>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   listContainer: {

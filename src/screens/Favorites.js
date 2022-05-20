@@ -9,6 +9,7 @@ import {
 import {  MaterialIcons } from '@expo/vector-icons'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { FavoritesContext } from '../contexts/FavoritesContext';
+import RenderItem from '../components/RenderItem';
 
 export default function Favorites() {
   const { favoriteList } = useContext(FavoritesContext)
@@ -18,27 +19,7 @@ export default function Favorites() {
       data={favoriteList}
       renderItem={({ item }) => {
         return (
-          <View style={styles.listContainer}>
-            <View>
-              <Image
-                source={{ uri: item['image'] }}
-                style={styles.image}
-                resizeMode='cover'
-              />
-            </View>
-            <View style={styles.listContainer}>
-              <View style={styles.row}>
-                <Text
-                  style={styles.text}
-                  allowFontScaling={true}
-                  numberOfLines={1}
-                >
-                  {item && item['name']}
-                </Text>
-                <MaterialIcons name='brunch-dining' size={24} color={'#444'} />
-              </View>
-            </View>
-          </View>
+          <RenderItem item={item} />
         );
       }}
     />
